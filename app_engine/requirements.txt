@@ -1,6 +1,6 @@
 Pillow
 flask
 numpy
-python-cv
+opencv-python
 requests
 scikit-image
