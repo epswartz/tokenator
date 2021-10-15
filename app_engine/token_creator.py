@@ -7,6 +7,7 @@ from tqdm.notebook import tqdm
 import numpy as np
 from PIL import Image
 import uuid
+import os
 
 TOKEN_TEMPLATE = imread("./token_template.png")
 TEMPLATE_COLOR = np.empty((280,280,4))
@@ -19,14 +20,24 @@ mask = np.all(TEMPLATE_COLOR == TOKEN_TEMPLATE, axis=2)
 
 def create_token(img):
     img_id = str(uuid.uuid4())
-    resp = container_predict(img, img_id)
+
+    # Read URL for backend GCP vision container.
+    model_endpoint = os.getenv('VISION_CONTAINER_ENDPOINT')
+    if not model_endpoint:
+        resp = container_predict(img, img_id)
+    resp = container_predict(img, img_id, model_endpoint)
     box = resp['predictions'][0]['detection_boxes'][0] # TODO multiple faces
     token = crop_token(img, box)
     return token
 
 def create_token_batch(imgs):
     img_ids = [str(uuid.uuid4()) for img in imgs]
-    resp = container_predict(imgs, img_ids)
+
+    # Read URL for backend GCP vision container.
+    model_endpoint = os.getenv('VISION_CONTAINER_ENDPOINT')
+    if not model_endpoint:
+        resp = container_predict(imgs, img_ids)
+    resp = container_predict(imgs, img_ids, model_endpoint)
     tokens = []
     for i in range(len(imgs)):
         box = resp['predictions'][i]['detection_boxes'][0] # TODO multiple faces
