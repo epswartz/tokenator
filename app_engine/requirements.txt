@@ -1,0 +1,6 @@
+Pillow
+flask
+numpy
+python-cv
+requests
+scikit-image
