@@ -34,4 +34,6 @@ def creator():
   return send_file(buf, attachment_filename=output_filename, mimetype='image/png')
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=5000, debug=True)
+
+    # For App Engine, this MUST be 8080 or you get 502.
+    app.run(host='0.0.0.0', port=8080, debug=True)
