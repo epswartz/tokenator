@@ -1,9 +1,6 @@
 from predict import container_predict
-import matplotlib.pyplot as plt
-import matplotlib.patches as patches
 from skimage.io import imread
 from glob import glob
-from tqdm.notebook import tqdm
 import numpy as np
 from PIL import Image
 import uuid
