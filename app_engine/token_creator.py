@@ -72,7 +72,8 @@ def crop_token(img, box):
     rectx2 = min(img.shape[1]-1, rectx+rectw)
     recty2 = min(img.shape[0]-1, recty+recth)
 
-    cropped = Image.fromarray(img[recty1:recty2, rectx1:rectx2,:])
+    cropped = Image.fromarray(img[recty1:recty2, rectx1:rectx2,[2,1,0]])
+
     cropped = np.array(cropped.resize((280,280)))
     if cropped.shape[-1] == 3:
         cropped = np.dstack((cropped, np.empty((280,280))))
